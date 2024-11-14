@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loja de Calçados</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <a href="#">
+            </a>
+            <h1 class="store-name">HN Store</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#">Início</a></li>
+                <li><a href="#">Produtos</a></li>
+                <li><a href="#">Carrinho</a></li>
+                <li><a href="#">Contato</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="products">
+            <h2>Nossos Produtos</h2>
+            <div class="product-list">
+                <div class="product-item">
+                    <div class="product-item">
+                        <a href="airmax.html">
+                            <img src="img/AirMax90.avif" alt="Calçado 1">
+                            <h3>Air Max 90</h3>
+                        </a>
+                        <p>R$ 620,00</p>
+                        <button>Adicionar ao Carrinho</button>
+                    </div>
+                    
+                <div class="product-item">
+                    <img src="img/Jordan4.avif" alt="Calçado 2">
+                    <h3>Air Jordan 4 Retro</h3>
+                    <p>R$ 1799,99</p>
+                    <button>Adicionar ao Carrinho</button>
+                </div>
+                <div class="product-item">
+                    <img src="img/Force1.avif" alt="Calçado 3">
+                    <h3>Air Force 1 "07</h3>
+                    <p>R$ 759,99</p>
+                    <button>Adicionar ao Carrinho</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Loja de Calçados. Todos os direitos reservados.</p>
+    </footer>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes do Air Max 90</title>
+    <link rel="stylesheet" href="styles.css">
+    <script>
+        function addToCart() {
+            const product = {
+                name: "Air Max 90",
+                price: 620.00,
+                image: "img/AirMax90.avif" // Adicionando a imagem do produto
+            };
+
+            // Adiciona o produto ao carrinho no localStorage
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            cart.push(product);
+            localStorage.setItem('cart', JSON.stringify(cart));
+
+            // Redireciona para a página do carrinho
+            window.location.href = 'carrinho.html';
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <h1>HN Store</h1>
+    </header>
+
+    <main>
+        <section class="product-details">
+            <h2>Air Max 90</h2>
+            <div class="product-gallery">
+                <img src="img/AirMax90.avif" alt="Imagem principal do Air Max 90" class="main-image">
+                <div class="additional-images">
+                    <img src="img/AirMax2.avif" alt="Imagem lateral do Air Max 90">
+                    <img src="img/AirMax3.avif" alt="Imagem traseira do Air Max 90">
+                </div>
+            </div>
+            <p>Preço: R$ 620,00</p>
+            
+            <label for="size">Selecione o tamanho:</label>
+            <select id="size" name="size">
+                <option value="38">38</option>
+                <option value="39">39</option>
+                <option value="40">40</option>
+                <option value="41">41</option>
+                <option value="42">42</option>
+            </select>
+
+            <button onclick="addToCart()">Adicionar ao Carrinho</button>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 HN Store. Todos os direitos reservados.</p>
+    </footer>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrinho</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>HN Store</h1>
+    </header>
+
+    <main>
+        <section class="cart">
+            <h2>Carrinho de Compras</h2>
+            <div id="cart-items">
+                <!-- Itens do carrinho serão inseridos aqui -->
+            </div>
+            <button onclick="finalizarCompra()">Finalizar Compra</button>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 HN Store. Todos os direitos reservados.</p>
+    </footer>
+
+    <script>
+        // Supondo que os itens do carrinho sejam armazenados como um array de objetos
+        const cartItems = [
+            { name: "Air Max 90", price: 620.00, size: "42", image: "img/AirMax90.avif" },
+            // Outros itens podem ser adicionados aqui
+        ];
+
+        // Função para exibir os itens do carrinho
+        function displayCartItems() {
+            const cartContainer = document.getElementById('cart-items');
+            cartContainer.innerHTML = ''; // Limpa os itens atuais
+
+            cartItems.forEach((item, index) => {
+                const itemElement = document.createElement('div');
+                itemElement.innerHTML = `
+                    <img src="${item.image}" alt="${item.name}" style="width: 50px; height: auto;">
+                    <h3>${item.name}</h3>
+                    <p>Preço: R$ ${item.price.toFixed(2)}</p>
+                    <p>Tamanho: ${item.size}</p>
+                    <button onclick="removeItem(${index})">Remover</button>
+                `;
+                cartContainer.appendChild(itemElement);
+            });
+        }
+
+        // Função para finalizar a compra
+        function finalizarCompra() {
+            // Armazenar o item no localStorage
+            localStorage.setItem('cartItems', JSON.stringify(cartItems));
+            window.location.href = 'finalizar.html'; // Redireciona para a página de finalização
+        }
+
+        // Função para remover um item do carrinho
+        function removeItem(index) {
+            // Remover o item do array
+            cartItems.splice(index, 1);
+            displayCartItems(); // Atualizar a exibição do carrinho
+        }
+
+        // Exibir os itens do carrinho ao carregar a página
+        displayCartItems();
+    </script>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finalizar Compra</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        .payment-option {
+            margin: 20px 0;
+        }
+
+        .payment-option label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .card-info, .boleto-info, .pix-info {
+            display: none;
+            margin-top: 10px;
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #333;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            display: block;
+            margin: 20px auto;
+        }
+
+        button:hover {
+            background-color: #555;
+        }
+
+        .cart-summary {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 8px;
+            background-color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Finalizar Compra</h2>
+
+    <div class="payment-option">
+        <label>
+            <input type="radio" name="payment" value="cartao" onclick="togglePaymentOptions()" checked>
+            Cartão
+        </label>
+        <label>
+            <input type="radio" name="payment" value="boleto" onclick="togglePaymentOptions()">
+            Boleto
+        </label>
+        <label>
+            <input type="radio" name="payment" value="pix" onclick="togglePaymentOptions()">
+            Pix
+        </label>
+    </div>
+
+    <div id="payment-options">
+        <div id="card-info" class="card-info">
+            <label for="card-name">Nome no Cartão:</label>
+            <input type="text" id="card-name" placeholder="Nome no Cartão" required>
+            <label for="card-number">Número do Cartão:</label>
+            <input type="text" id="card-number" placeholder="Número do Cartão" maxlength="16" required>
+            <label for="card-cvc">Código de Segurança (CVC):</label>
+            <input type="text" id="card-cvc" placeholder="CVC" maxlength="3" required>
+        </div>
+
+        <div id="boleto-info" class="boleto-info">
+            <p>Selecione esta opção para gerar um boleto.</p>
+            <button id="generate-boleto">Gerar Boleto</button>
+        </div>
+
+        <div id="pix-info" class="pix-info">
+            <p>Selecione esta opção para gerar um QR Code/Código Pix.</p>
+            <button id="generate-pix">Gerar QR Code/Código Pix</button>
+        </div>
+    </div>
+
+    <div class="cart-summary">
+        <h3>Resumo do Carrinho</h3>
+        <p>Produto: Air Max 90</p>
+        <p>Preço: R$ 620,00</p>
+        <p>Tamanho: 42</p>
+    </div>
+
+    <button id="finalize-purchase">Pagar</button>
+
+    <script>
+        function togglePaymentOptions() {
+            const cardInfo = document.getElementById('card-info');
+            const boletoInfo = document.getElementById('boleto-info');
+            const pixInfo = document.getElementById('pix-info');
+
+            const paymentMethod = document.querySelector('input[name="payment"]:checked').value;
+
+            cardInfo.style.display = paymentMethod === 'cartao' ? 'block' : 'none';
+            boletoInfo.style.display = paymentMethod === 'boleto' ? 'block' : 'none';
+            pixInfo.style.display = paymentMethod === 'pix' ? 'block' : 'none';
+        }
+
+        document.getElementById('finalize-purchase').addEventListener('click', function() {
+            // Aqui você pode fazer validações adicionais, se necessário
+            window.location.href = 'agradecimento.html'; // Redireciona para a página de agradecimento
+        });
+    </script>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agradecimento</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            margin-top: 50px;
+        }
+
+        footer {
+            margin-top: 50px;
+            font-size: 14px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <h1>Obrigado pela sua compra!</h1>
+    <p>Seu pedido foi recebido com sucesso. Em breve, você receberá informações sobre a entrega.</p>
+    
+    <footer>
+        <p>&copy; 2024 Loja de Calçados. Todos os direitos reservados.</p>
+    </footer>
+</body>
+</html>
+
+/* Estilos Globais */
+.logo{
+    text-align: center;
+    margin-top: 10px;
+}
+
+.logo-img {
+    width: 150px;
+    height: auto;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+    color: #333;
+}
+
+header {
+    background-color: #333;
+    color: white;
+    padding: 10px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header .logo h1 {
+    margin-left: 20px;
+}
+
+nav ul {
+    list-style: none;
+    margin-right: 20px;
+    padding: 0;
+    display: flex;
+    gap: 20px;
+}
+
+nav ul li {
+    display: inline;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+main {
+    padding: 20px;
+}
+
+.products {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.products h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.product-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.product-item {
+    background-color: white;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.product-item img {
+    width: 100%;
+    max-width: 200px;
+    margin-bottom: 10px;
+}
+
+.product-item h3 {
+    margin: 10px 0;
+    font-size: 18px;
+    color: #333;
+}
+
+.product-item p {
+    font-size: 16px;
+    color: #666;
+}
+
+.product-item button {
+    background-color: #333;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.product-item button:hover {
+    background-color: #555;
+}
+
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
+
+
+
+.product-details {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.product-gallery {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.main-image {
+    width: 300px;
+    height: auto;
+    margin-bottom: 15px;
+}
+
+.additional-images {
+    display: flex;
+    gap: 10px;
+}
+
+.additional-images img {
+    width: 100px;
+    height: auto;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+/* Estilo do seletor de tamanho */
+#size {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #333;
+    font-size: 16px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+/* Estilo do botão de adicionar ao carrinho */
+button {
+    background-color: #333;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+/* Efeito ao passar o mouse no botão */
+button:hover {
+    background-color: #555;
+    transform: scale(1.05);
+}
+
+/* Estilo específico para centralizar os elementos */
+.product-details select,
+.product-details button {
+    display: inline-block;
+    margin-top: 15px;
+}
+
+.cart-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.cart-item-image {
+    width: 50px; /* Tamanho da imagem do item no carrinho */
+    height: auto;
+    margin-right: 10px;
+}
+
+.cart-item-details {
+    flex: 1; /* Permite que o texto ocupe o espaço restante */
+}
+
+.remove-button {
+    background-color: red; /* Cor de fundo do botão */
+    color: white; /* Cor do texto */
+    border: none; /* Sem borda */
+    padding: 5px 10px; /* Espaçamento interno */
+    cursor: pointer; /* Muda o cursor para indicar que é clicável */
+    border-radius: 5px; /* Cantos arredondados */
+    margin-left: 10px; /* Espaçamento à esquerda */
+}
+
+.remove-button:hover {
+    background-color: darkred; /* Cor de fundo ao passar o mouse */
+}
+
+.finalizar-button {
+    background-color: #28a745; /* Verde */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-top: 10px; /* Espaço acima do botão */
+}
+
+.finalizar-button:hover {
+    background-color: #218838; /* Verde escuro ao passar o mouse */
+}
+
+.checkout select {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+
+.checkout input {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+
+.checkout button {
+    background-color: #28a745; /* Verde */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.checkout button:hover {
+    background-color: #218838; /* Verde escuro ao passar o mouse */
+}
+
+
+
